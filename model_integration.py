@@ -22,7 +22,7 @@ class HospitalPricingClassifier(BaseEstimator, ClassifierMixin):
     @st.cache
     def __init__(self,
                  HospitalLocPath='hospital_model3',
-                 PricesPath='prices_clean3',
+                 PricesPath='hpp4/prices_clean3',
                  threshold=100):
             
         
