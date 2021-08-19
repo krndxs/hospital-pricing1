@@ -22,12 +22,12 @@ class HospitalPricingClassifier(BaseEstimator, ClassifierMixin):
     @st.cache
     def __init__(self,
                  HospitalLocPath='hospital_model3',
-                 PricesPath='prices_model3',
+                 PricesPath='prices_clean3',
                  threshold=100):
             
         
         self.hospital_loc = pd.read_parquet(HospitalLocPath)
-        self.prices = pd.read_parquet('prices_model')    
+        self.prices = pd.read_parquet(PricesPath)    
 
     def _get_distance(self,p_lat, p_lng, threshold=100):
 
@@ -135,18 +135,7 @@ def make_fig(mean_prices, address):
 
 
 #Streamlit
-@st.cache(hash_funcs={"_thread.RLock": lambda _: None})
-def load_files():
-    pass
-    s3 = boto3.client(
-        's3',
-        aws_access_key_id= st.secrets["key_id"],
-        aws_secret_access_key= st.secrets["access_key"],
-        )
-    s3.download_file('hospitalpricing', 'prices_model3', 'prices_model')
 
-
-load_files()
 model = HospitalPricingClassifier()
 
 with st.form(key = 'form_one'):
